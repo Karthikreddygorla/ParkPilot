@@ -1,0 +1,28 @@
+extends ../layout
+include ../mixins
+
+block content
+  dl.details
+    dt Email
+    dd= customer.email
+    dt Phone
+    dd= customer.phone || '-'
+  h2 Vehicles
+  if vehicles.length
+    table
+      thead
+        tr
+          th Registration
+          th Make
+          th Model
+          th Type
+      tbody
+        each v in vehicles
+          tr
+            td= v.registration_number
+            td= v.make || '-'
+            td= v.model || '-'
+            td= v.vehicle_type
+  else
+    +empty('This customer has no vehicles.')
+  p: a(href="/customers") Back to customers
