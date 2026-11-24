@@ -1,0 +1,31 @@
+extends ../layout
+include ../mixins
+
+block content
+  dl.details
+    dt Type
+    dd= space.space_type
+    dt Status
+    dd: +badge(space.operational_status)
+    dt Location
+    dd= space.location_label || '-'
+
+  h2 Reservations for this space
+  if reservations.length
+    table
+      thead
+        tr
+          th Vehicle
+          th Start
+          th End
+          th Status
+      tbody
+        each r in reservations
+          tr
+            td= r.registration_number
+            td= r.start_time
+            td= r.end_time
+            td: +badge(r.status)
+  else
+    +empty('No reservations for this space yet.')
+  p: a(href="/spaces") Back to spaces

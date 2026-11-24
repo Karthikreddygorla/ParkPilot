@@ -1,0 +1,37 @@
+extends ../layout
+include ../mixins
+
+block content
+  form.filters(method="get" action="/spaces")
+    label Type
+      select(name="type")
+        option(value="") All types
+        each t in TYPES
+          option(value=t selected=(t === type))= t
+    label Status
+      select(name="status")
+        option(value="") All statuses
+        each s in STATUSES
+          option(value=s selected=(s === status))= s.replace(/_/g, ' ')
+    button(type="submit") Filter
+    a.reset(href="/spaces") Clear
+
+  p.count #{spaces.length} space#{spaces.length === 1 ? '' : 's'} shown
+
+  if spaces.length
+    table
+      thead
+        tr
+          th Code
+          th Type
+          th Status
+          th Location
+      tbody
+        each s in spaces
+          tr
+            td: a(href=`/spaces/${s.space_id}`)= s.space_code
+            td= s.space_type
+            td: +badge(s.operational_status)
+            td= s.location_label || '-'
+  else
+    +empty('No spaces match those filters.')
