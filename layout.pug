@@ -1,0 +1,20 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    title #{title} | ParkPilot
+    link(rel="stylesheet" href="/style.css")
+  body
+    header.top
+      a.brand(href="/") ParkPilot
+      nav
+        each item in [['/', 'Dashboard'], ['/spaces', 'Spaces'], ['/customers', 'Customers'], ['/vehicles', 'Vehicles'], ['/reservations', 'Reservations']]
+          a(href=item[0] class=(item[0] === '/' ? path === '/' : path.startsWith(item[0])) ? 'active' : '') #{item[1]}
+      form.search(action="/search" method="get")
+        input(type="search" name="q" placeholder="Search name or registration" aria-label="Search")
+        button(type="submit") Search
+    main
+      h1= title
+      block content
+    footer ParkPilot · Software Development 2 · TEAM DEV'S

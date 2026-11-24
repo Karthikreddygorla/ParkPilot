@@ -1,0 +1,8 @@
+//- Coloured status label, e.g. +badge('AVAILABLE')
+mixin badge(value)
+  - const cls = String(value).toLowerCase().replace(/_/g, '-')
+  span.badge(class=cls)= String(value).replace(/_/g, ' ')
+
+//- "Nothing found" message
+mixin empty(text)
+  p.empty= text
