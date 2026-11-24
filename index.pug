@@ -1,0 +1,23 @@
+extends ../layout
+include ../mixins
+
+block content
+  if vehicles.length
+    table
+      thead
+        tr
+          th Registration
+          th Make
+          th Model
+          th Type
+          th Owner
+      tbody
+        each v in vehicles
+          tr
+            td= v.registration_number
+            td= v.make || '-'
+            td= v.model || '-'
+            td= v.vehicle_type
+            td: a(href=`/customers/${v.customer_id}`)= v.full_name
+  else
+    +empty('No vehicles yet.')
