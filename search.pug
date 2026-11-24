@@ -1,0 +1,24 @@
+extends layout
+include mixins
+
+block content
+  if !q
+    +empty('Type a customer name or a vehicle registration in the box above.')
+  else if results.length
+    p.count #{results.length} result#{results.length === 1 ? '' : 's'} for "#{q}"
+    table
+      thead
+        tr
+          th Customer
+          th Email
+          th Registration
+          th Vehicle
+      tbody
+        each r in results
+          tr
+            td: a(href=`/customers/${r.customer_id}`)= r.full_name
+            td= r.email
+            td= r.registration_number || '-'
+            td #{r.make || ''} #{r.model || ''}
+  else
+    +empty(`No customers or vehicles match "${q}".`)
