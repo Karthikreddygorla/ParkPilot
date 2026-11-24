@@ -1,0 +1,43 @@
+extends ../layout
+include ../mixins
+
+block content
+  form.filters(method="get" action="/reservations")
+    label Date
+      input(type="date" name="date" value=date)
+    label Space
+      select(name="space")
+        option(value="") All spaces
+        each s in spaces
+          option(value=s.space_id selected=(String(s.space_id) === space))= s.space_code
+    label Status
+      select(name="status")
+        option(value="") All statuses
+        each s in STATUSES
+          option(value=s selected=(s === status))= s
+    button(type="submit") Filter
+    a.reset(href="/reservations") Clear
+
+  p.count #{reservations.length} reservation#{reservations.length === 1 ? '' : 's'} shown
+
+  if reservations.length
+    table
+      thead
+        tr
+          th Space
+          th Vehicle
+          th Customer
+          th Start
+          th End
+          th Status
+      tbody
+        each r in reservations
+          tr
+            td= r.space_code
+            td= r.registration_number
+            td= r.full_name
+            td= r.start_time
+            td= r.end_time
+            td: +badge(r.status)
+  else
+    +empty('No reservations match those filters.')
