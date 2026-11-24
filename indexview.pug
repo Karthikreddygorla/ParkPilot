@@ -1,0 +1,38 @@
+extends layout
+include mixins
+
+block content
+  section.cards
+    .card
+      span.num= total
+      span.lbl Total spaces
+    .card.green
+      span.num= byStatus.AVAILABLE
+      span.lbl Available
+    .card.amber
+      span.num= byStatus.MAINTENANCE
+      span.lbl Maintenance
+    .card.grey
+      span.num= byStatus.OUT_OF_SERVICE
+      span.lbl Out of service
+
+  h2 Upcoming reservations
+  if upcoming.length
+    table
+      thead
+        tr
+          th Space
+          th Vehicle
+          th Start
+          th End
+          th Status
+      tbody
+        each r in upcoming
+          tr
+            td= r.space_code
+            td= r.registration_number
+            td= r.start_time
+            td= r.end_time
+            td: +badge(r.status)
+  else
+    +empty('No upcoming reservations.')

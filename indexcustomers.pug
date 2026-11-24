@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+  include ../mixins
+  if customers.length
+    table
+      thead
+        tr
+          th Name
+          th Email
+          th Phone
+          th Vehicles
+      tbody
+        each c in customers
+          tr
+            td: a(href=`/customers/${c.customer_id}`)= c.full_name
+            td= c.email
+            td= c.phone || '-'
+            td= c.vehicle_count
+  else
+    +empty('No customers yet.')
